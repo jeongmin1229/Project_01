@@ -68,10 +68,14 @@ driver.get(present_url)
 
 
 # 제목 가져오기 
-search_titles = []
-search_titles = driver.find_elements_by_css_selector(".result-title")
-for i in search_titles:
-    title = i.text 
-    print(title)
-
-
+count = 1
+time.sleep(2)
+titles_raw = driver.find_elements_by_class_name("result-title")
+for title in titles_raw:
+    if count < 3:
+        print(title.get_attribute('onclick'))
+        print(title.text)
+        print()
+        count+=1
+    else:
+        break
