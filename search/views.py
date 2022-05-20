@@ -8,12 +8,19 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import requests
 from bs4 import BeautifulSoup as bs
+from django.shortcuts import render
+
+# Create your views here.
+
+def home(request):
+    return render(request, 'search/home.html')
 
 
 
 # webdriver 옵션 
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
+
 driver = webdriver.Chrome(options=options)
 
 # 검색 시작점, url 이동
