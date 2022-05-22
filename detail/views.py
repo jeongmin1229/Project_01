@@ -20,24 +20,24 @@ def board_list(request):
     # images = img_crawl()
     # review_crawl()
 
-    board = Board.objects.all().order_by('id')
+    boards = Board.objects.all().order_by('id')
     page = int(request.GET.get('p', 1))
-    paginator = Paginator(board, 5) 
+    paginator = Paginator(boards, 5) 
 
     boards = paginator.get_page(page)
 
     # 카카오 --------------------------------------------
-    # searching = '우도'
-    # url = 'https://dapi.kakao.com/v2/local/search/address.json?query='+searching
-    # headers = {"Authorization": "KakaoAK 2b6d2255a3c62ca88e47dc43bac4ee37"}
-    # result = json.loads(str(requests.get(url,headers=headers).text))
+    searching = '종로구 계동길 37'
+    url = 'https://dapi.kakao.com/v2/local/search/address.json?query='+searching
+    headers = {"Authorization": "KakaoAK 2b6d2255a3c62ca88e47dc43bac4ee37"}
+    result = json.loads(str(requests.get(url,headers=headers).text))
  
-    # match_first = result['documents'][0]['address']
+    match_first = result['documents'][0]['address']
     
-    # y, x = float(match_first['y']),float(match_first['x'])
-    # print(y, x)
+    y, x = float(match_first['y']),float(match_first['x'])
 
-    return render(request, 'detail/detail.html')
+
+    return render(request, 'detail/detail.html', {'boards':boards, 'y':y, 'x':x})
     # return render(request, 'detail/detail_list.html', {'boards':boards ,'images' : images, 'y':y, 'x':x})
 
 
