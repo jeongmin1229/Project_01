@@ -1,8 +1,9 @@
-from ctypes import addressof
 from django.db import models
 
-class Searchdata(models.Model):
-    title = models.CharField()
-    address = models.CharField()
-    url = models.CharField()
-    image = models.CharField()
+class Search(models.Model):
+    title = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+    url = models.TextField()
+    image = models.TextField()
+    review_count = models.CharField(max_length=200,default="")
+# Create your models here.
