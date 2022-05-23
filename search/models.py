@@ -6,4 +6,5 @@ class Search(models.Model):
     url = models.TextField()
     image = models.TextField()
     review_count = models.CharField(max_length=200,default="")
+    rating = models.CharField(max_length=200,default="")
 # Create your models here.
