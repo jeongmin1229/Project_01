@@ -9,6 +9,10 @@ from selenium.webdriver.chrome.options import Options
 import requests
 from bs4 import BeautifulSoup as bs
 from django.shortcuts import render
+from django.db import models
+from .models import Search
+
+import search
 
 # webdriver 옵션 
 options = webdriver.ChromeOptions()
@@ -22,12 +26,12 @@ def home(request):
     return render(request, 'search/home.html')
 
 def key_word(request):
-
+    Search.objects.all().delete()
     if request.method =='GET':
         question = request.GET.get('q')
         op = request.GET.get('select')
-    else:
-        question = "실패"
+    #else:
+    #    question = "실패"
     
     #검색 시작점, url 이동
     url_path = "https://www.tripadvisor.co.kr/Attractions"
@@ -59,15 +63,17 @@ def key_word(request):
 
     # adddress
     count_address = 1
-    time.sleep(2)
+    time.sleep(1)
 
     address_raw = driver.find_elements_by_class_name("address-text")
     address_list=[]
 
     for address in address_raw:
         if count_address < 6:
-            address_list.append(address.text)
             count_address+=1
+            #address_list.append(address.text)
+            a = Search(address = address)
+            a.save()
         else:
             break
 
@@ -92,8 +98,12 @@ def key_word(request):
             url2 = url1.split('html')[0]
             url = "https://www.tripadvisor.co.kr/" + url2 +"html"
 
-            title_list.append(title)
-            url_list.append(url)
+            t = Search(title = title)
+            u = Search(url = url)
+            t.save()
+            u.save()
+            #title_list.append(title)
+            #url_list.append(url)
 
             count_data+=1
         else:
@@ -102,7 +112,7 @@ def key_word(request):
     # adddress
     # count_image=1
 
-    time.sleep(2)
+    #time.sleep(2)
     count_image = 1
 
     image_raw = driver.find_elements_by_css_selector(".aspect.is-shown-at-mobile.is-hidden-tablet > .inner")
@@ -114,22 +124,10 @@ def key_word(request):
             image3 = image2.split('"')[1]
             image4 = image3.split('"')[0]
             count_image +=1
-            image_list.append(image4)
+            i = Search(image = image4)
+            i.save()
+            #image_list.append(image4)
         else:
             break
 
-    
-    a = title_list
-    b = url_list
-    c = address_list
-    d = image_list
-
-    context ={
-        'question' : question,
-        'title' : a[0],
-        'url' : b[0],
-        'address' : c[0],
-        'image' : d[0]
-    }
-
-    return render(request, 'search/search.html', context)
+    return render(request, 'search/search.html')
