@@ -2,13 +2,13 @@ from django.db import models
 
 # Create your models here.
 
-# class Img(models.Model):
-#     destination = models.ForeignKey('search.Search', on_delete=models.CASCADE, verbose_name='목적지')
-#     address = models.CharField(max_length=500, verbose_name='이미지 주소')
+class Img(models.Model):
+    # destination = models.ForeignKey('search.Search', on_delete=models.CASCADE, verbose_name='목적지')
+    address = models.CharField(max_length=500, verbose_name='이미지 주소')
 
-#     class Meta:
-#         verbose_name = "이미지"
-#         verbose_name_plural = "이미지"
+    class Meta:
+        verbose_name = "이미지"
+        verbose_name_plural = "이미지"
 
 
 class Board(models.Model):

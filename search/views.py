@@ -3,6 +3,7 @@
 from tkinter import BROWSE
 import urllib.request
 import time
+# from jmespath import search
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
@@ -12,20 +13,27 @@ from django.shortcuts import render
 from django.db import models
 from .models import Search
 
-import search
-
 # webdriver 옵션 
-options = webdriver.ChromeOptions()
-options.add_experimental_option("excludeSwitches", ["enable-logging"])
-options.add_argument("headless")
-driver = webdriver.Chrome(options=options)
-
+# webdriver 옵션 
+options = Options() 
+options.add_experimental_option("excludeSwitches", ["enable-logging"]) 
+options.add_argument("headless") 
+# driver = webdriver.Chrome('./chromedriver.exe', options=options) # Window 
+driver = webdriver.Chrome('./chromedriver', options=options) # Mac
 
 
 def home(request):
-    return render(request, 'search/home.html')
+    search = ''
+    if request.method == 'GET':
+        search = request.GET.get('query')
+
+    return render(request, 'search/home.html', {'search':search})
 
 def key_word(request):
+    data = {}
+    if request.method == 'GET':
+        search = request.GET.get('query')
+
     Search.objects.all().delete()
     if request.method =='GET':
         question = request.GET.get('q')
@@ -69,11 +77,10 @@ def key_word(request):
     address_list=[]
 
     for address in address_raw:
-        if count_address < 6:
+        if count_address < 7:
             count_address+=1
-            #address_list.append(address.text)
-            a = Search(address = address)
-            a.save()
+            address_list.append(address.text)
+
         else:
             break
 
@@ -82,12 +89,13 @@ def key_word(request):
     count_data = 1
     time.sleep(2)
 
+
     data_raw = driver.find_elements_by_class_name("result-title")
     url_list= []
     title_list=[]
 
     for data in data_raw:
-        if count_data < 6:
+        if count_data < 7:
 
             #title
             title = (data.text)
@@ -97,13 +105,8 @@ def key_word(request):
             url1 = detail_url.split('/')[1]
             url2 = url1.split('html')[0]
             url = "https://www.tripadvisor.co.kr/" + url2 +"html"
-
-            t = Search(title = title)
-            u = Search(url = url)
-            t.save()
-            u.save()
-            #title_list.append(title)
-            #url_list.append(url)
+            title_list.append(title)
+            url_list.append(url)
 
             count_data+=1
         else:
@@ -119,15 +122,53 @@ def key_word(request):
     image_list=[]
 
     for image1 in image_raw:
-        if count_image < 6:
+        if count_image < 7:
             image2 = image1.get_attribute('style')
             image3 = image2.split('"')[1]
             image4 = image3.split('"')[0]
             count_image +=1
-            i = Search(image = image4)
-            i.save()
-            #image_list.append(image4)
+            image_list.append(image4)
         else:
             break
 
-    return render(request, 'search/search.html')
+    aa = 0
+    while aa < 6:
+        u = Search(address = address_list[aa], title = title_list[aa], url = url_list[aa], image = image_list[aa])
+        u.save()
+        aa += 1
+
+        context = {
+            "address1" : address_list[0],
+            "title1" : title_list[0], 
+            "url1" : url_list[0], 
+            "image1" : image_list[0],
+
+            "address2" : address_list[1],
+            "title2" : title_list[1], 
+            "url2" : url_list[1], 
+            "image2" : image_list[1],
+
+            "address3" : address_list[2],
+            "title3" : title_list[2], 
+            "url3" : url_list[2], 
+            "image3" : image_list[2],
+
+            "address4" : address_list[3],
+            "title4" : title_list[3], 
+            "url4" : url_list[3], 
+            "image4" : image_list[3],
+
+            "address5" : address_list[4],
+            "title5" : title_list[4], 
+            "url5" : url_list[4], 
+            "image5" : image_list[4],
+
+            "address6" : address_list[5],
+            "title6" : title_list[5], 
+            "url6" : url_list[5], 
+            "image6" : image_list[5],
+            "question" : question
+        }
+
+    return render(request, 'search/search.html', context)
+

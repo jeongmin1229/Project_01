@@ -8,8 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="/static/assets/img/favicon.ico">
-
+ 
     <!-- CSS here -->
     <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/assets/css/owl.carousel.min.css">
@@ -90,7 +89,7 @@
             <!-- Mobile Menu -->
             <div class="slider-active">
                 <div class="single-slider hero-overly  slider-height d-flex align-items-center"
-                    data-background="/static/assets/img/hero/h1_hero.jpg">
+                    data-background="/static/assets/img/hero/video-bg.jpg">
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-9 col-lg-9 col-md-9">
@@ -104,9 +103,13 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <!-- form -->
-                                <form action="/search/" class="search-box" method="get">
+                                <form action="/search/" class="search-box" method="GET">
                                     <div class="input-form mb-30">
-                                        <input name="q" type="text" placeholder="When Would you like to go ?">
+                                        {% if search == None %}
+                                        <input type="text" name = "q" placeholder="검색어를 입력해 주세요.">
+                                        {% else %}
+                                        <input type="text" name = "q" placeholder="{{search}}">
+                                        {% endif %}
                                     </div>
                                     <div class="select-form mb-30">
                                         <div class="select-itms">
@@ -120,8 +123,7 @@
                                         </div>
                                     </div>
                                     <div class="search-form mb-30">
-                                        <button type = "submit"><a></a></button> 
-                                        <a href="#">Search</a>
+                                        <button type="submit" href='/search/key_word/' style='cursor:pointer; width:100%;height:55px;background:#fde02f;font-size:20px;line-height:1;text-align:center;color:#000;display:block;padding:15px;border-radius:5px;text-transform:uppercase;font-family:"Barlow Condensed";letter-spacing:0.1em;line-height:1.2;line-height:24px;font-size:14px'>Search</button>
                                     </div>	
                                 </form>
                             </div>
@@ -141,114 +143,129 @@
                     </div>
                 </div>
                 <div class="row">
+
+
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src="https://media-cdn.tripadvisor.com/media/photo-s/09/69/1d/6c/caption.jpg" style="width: 290px;height: 220px;">
+                                <img src="/static/assets/img/service/services1.jpg" style="width: 290px;height: 220px;">
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>4.5</span> </span>
-                                    <h3><a href="#">우도</a></h3>
+                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
+                                    <h3><a href="/detail/list/">여행지</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>우도면, 제주</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src="https://media-cdn.tripadvisor.com/media/photo-s/11/35/cf/1f/20170216-072615-largejpg.jpg" style="width: 290px;height: 220px;">
+                                <img src="/static/assets/img/service/services2.jpg" style="width: 290px;height: 220px;">
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>4.5</span> </span>
-                                    <h3><a href="#">우도등대공원</a></h3>
+                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
+                                    <h3><a href="/detail/list/">여행지</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>우도면 우도봉길 105</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src="https://media-cdn.tripadvisor.com/media/photo-s/0d/b4/16/af/caption.jpg" style="width: 290px;height: 220px;">
+                                <img src="/static/assets/img/service/services3.jpg" style="width: 290px;height: 220px;">
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>4.5</span> </span>
-                                    <h3><a href="#">Udo Shrine</a></h3>
+                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
+                                    <h3><a href="/detail/list/">여행지</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>3232 미야자키</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src="https://media-cdn.tripadvisor.com/media/photo-s/19/66/09/18/caption.jpg" style="width: 290px;height: 220px;">
+                                <img src="/static/assets/img/service/services4.jpg" style="width: 290px;height: 220px;">
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>5</span> </span>
-                                    <h3><a href="#">산호해수욕장</a></h3>
+                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
+                                    <h3><a href="/detail/list/">여행지</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>우도면 연평리</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src="https://media-cdn.tripadvisor.com/media/photo-s/16/f3/a0/32/caption.jpg" style="width: 290px;height: 220px;">
+                                <img src="/static/assets/img/service/services5.jpg" style="width: 290px;height: 220px;">
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>5</span> </span>
-                                    <h3><a href="#">검멀레</a></h3>
+                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
+                                    <h3><a href="/detail/list/">여행지</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>우도면 연평리</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src="https://media-cdn.tripadvisor.com/media/photo-s/0d/79/46/9e/caption.jpg" style="width: 290px;height: 220px;">
+                                <img src="/static/assets/img/service/services6.jpg" style="width: 290px;height: 220px;">
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>4.5</span> </span>
-                                    <h3><a href="#">성산 일출봉</a></h3>
+                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
+                                    <h3><a href="/detail/list/">여행지</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>성산읍 성산리 104</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+
                 </div>
             </div>
         </div>
