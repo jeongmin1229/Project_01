@@ -1,16 +1,12 @@
 # 기본 설정 
 # import selenium
-from tkinter import BROWSE
-import urllib.request
+
 import time
 # from jmespath import search
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-import requests
-from bs4 import BeautifulSoup as bs
 from django.shortcuts import render
-from django.db import models
 from .models import Search
 
 # webdriver 옵션 
@@ -35,6 +31,8 @@ def key_word(request):
         search = request.GET.get('query')
 
     Search.objects.all().delete()
+    
+
     if request.method =='GET':
         question = request.GET.get('q')
         op = request.GET.get('select')

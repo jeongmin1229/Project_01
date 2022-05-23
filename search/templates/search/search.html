@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="manifest" href="site.webmanifest"> -->
- 
+
     <!-- CSS here -->
     <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/assets/css/owl.carousel.min.css">
@@ -21,6 +21,15 @@
     <link rel="stylesheet" href="/static/assets/css/slick.css">
     <link rel="stylesheet" href="/static/assets/css/nice-select.css">
     <link rel="stylesheet" href="/static/assets/css/style.css">
+
+    <style>
+        .place-cap-top{
+            white-space: nowrap;
+            overflow:hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -106,9 +115,9 @@
                                 <form action="/search/" class="search-box" method="GET">
                                     <div class="input-form mb-30">
                                         {% if search == None %}
-                                        <input type="text" name = "q" placeholder="검색어를 입력해 주세요.">
+                                        <input type="text" name="q" placeholder="검색어를 입력해 주세요.">
                                         {% else %}
-                                        <input type="text" name = "q" placeholder="{{search}}">
+                                        <input type="text" name="q" placeholder="{{search}}">
                                         {% endif %}
                                     </div>
                                     <div class="select-form mb-30">
@@ -123,8 +132,9 @@
                                         </div>
                                     </div>
                                     <div class="search-form mb-30">
-                                        <button type="submit" href='/search/key_word/' style='cursor:pointer; width:100%;height:55px;background:#fde02f;font-size:20px;line-height:1;text-align:center;color:#000;display:block;padding:15px;border-radius:5px;text-transform:uppercase;font-family:"Barlow Condensed";letter-spacing:0.1em;line-height:1.2;line-height:24px;font-size:14px'>Search</button>
-                                    </div>	
+                                        <button type="submit" href='/search/key_word/'
+                                            style='cursor:pointer; width:100%;height:55px;background:#fde02f;font-size:20px;line-height:1;text-align:center;color:#000;display:block;padding:15px;border-radius:5px;text-transform:uppercase;font-family:"Barlow Condensed";letter-spacing:0.1em;line-height:1.2;line-height:24px;font-size:14px'>Search</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -134,7 +144,7 @@
         </div>
 
 
-        
+
         <div class="favourite-place">
             <div class="container">
                 <div class="row-3">
@@ -144,43 +154,23 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div class="row">
-
-
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src="/static/assets/img/service/services1.jpg" style="width: 290px;height: 220px;">
+                                <img src={{image1}} style="width: 380px;height: 220px;">
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
-                                    <h3><a href="/detail/list/">여행지</a></h3>
+                                    <span><i class="fas fa-star"></i><span>4.5</span> </span>
+                                    <!-- <h3><a href="/detail/list/{{title1}}/">{{title1}}</a></h3> -->
+                                    <h3><a href="/detail/list/">{{title1}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-xl-4 col-lg-4 col-md-6">
-                        <div class="single-place mb-30">
-                            <div class="place-img">
-                                <img src="/static/assets/img/service/services2.jpg" style="width: 290px;height: 220px;">
-                            </div>
-                            <div class="place-cap">
-                                <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
-                                    <h3><a href="/detail/list/">여행지</a></h3>
-                                </div>
-                                <div class="place-cap-bottom">
-                                    <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{{address1}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -191,37 +181,16 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src="/static/assets/img/service/services3.jpg" style="width: 290px;height: 220px;">
+                                <img src={{image2}} style="width: 380px;height: 220px;">
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
-                                    <h3><a href="/detail/list/">여행지</a></h3>
+                                    <span><i class="fas fa-star"></i><span>4.5</span> </span>
+                                    <h3><a href="#">{{title2}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-xl-4 col-lg-4 col-md-6">
-                        <div class="single-place mb-30">
-                            <div class="place-img">
-                                <img src="/static/assets/img/service/services4.jpg" style="width: 290px;height: 220px;">
-                            </div>
-                            <div class="place-cap">
-                                <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
-                                    <h3><a href="/detail/list/">여행지</a></h3>
-                                </div>
-                                <div class="place-cap-bottom">
-                                    <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{{address2}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -232,42 +201,82 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src="/static/assets/img/service/services5.jpg" style="width: 290px;height: 220px;">
+                                <img src={{image3}} style="width: 380px;height: 220px;">
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
-                                    <h3><a href="/detail/list/">여행지</a></h3>
+                                    <span><i class="fas fa-star"></i><span>4.5</span> </span>
+                                    <h3><a href="#">{{title3}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{{address3}}</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-
 
 
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src="/static/assets/img/service/services6.jpg" style="width: 290px;height: 220px;">
+                                <img src={{image4}} style="width: 380px;height: 220px;">
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>별점</span> </span>
-                                    <h3><a href="/detail/list/">여행지</a></h3>
+                                    <span><i class="fas fa-star"></i><span>5</span> </span>
+                                    <h3><a href="#">{{title4}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>주소</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{{address4}}</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="single-place mb-30">
+                            <div class="place-img">
+                                <img src={{image5}} style="width: 380px;height: 220px;">
+                            </div>
+                            <div class="place-cap">
+                                <div class="place-cap-top">
+                                    <span><i class="fas fa-star"></i><span>5</span> </span>
+                                    <h3><a href="#">{{title5}}</a></h3>
+                                </div>
+                                <div class="place-cap-bottom">
+                                    <ul>
+                                        <li><i class="fas fa-map-marker-alt"></i>{{address5}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="single-place mb-30">
+                            <div class="place-img">
+                                <img src={{image6}} style="width: 380px;height: 220px;">
+                            </div>
+                            <div class="place-cap">
+                                <div class="place-cap-top">
+                                    <span><i class="fas fa-star"></i><span>4.5</span> </span>
+                                    <h3><a href="#">{{title6}}</a></h3>
+                                </div>
+                                <div class="place-cap-bottom">
+                                    <ul>
+                                        <li><i class="fas fa-map-marker-alt"></i>{{address6}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
 
 
@@ -280,7 +289,8 @@
 
 
         <!-- Testimonial Start -->
-        <div class="testimonial-area testimonial-padding" data-background="/static/assets/img/testmonial/testimonial_bg.jpg">
+        <div class="testimonial-area testimonial-padding"
+            data-background="/static/assets/img/testmonial/testimonial_bg.jpg">
             <div class="container ">
                 <div class="row d-flex justify-content-center">
                     <div class="col-xl-11 col-lg-11 col-md-9">

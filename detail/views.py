@@ -8,37 +8,42 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
 import requests
 import json
+from search.models import Search
 # from search.models import Search
-
-
-def detail(request):
-    img_crawl()
-    review_crawl()
-    return redirect('./detail')
 
 def detail_list(request):
     images = Img.objects.all()
-    boards = Board.objects.all().order_by('id')
-    page = int(request.GET.get('p', 1))
-    paginator = Paginator(boards, 5) 
-    boards = paginator.get_page(page)
+    # boards = Board.objects.get().order_by('id')
+    # page = int(request.GET.get('p', 1))
+    # paginator = Paginator(boards, 5) 
+    # boards = paginator.get_page(page)
 
     # 카카오 --------------------------------------------
-    searching = '종로구 계동길 37'
-    url = 'https://dapi.kakao.com/v2/local/search/address.json?query='+searching
-    headers = {"Authorization": "KakaoAK 2b6d2255a3c62ca88e47dc43bac4ee37"}
-    result = json.loads(str(requests.get(url,headers=headers).text))
-    match_first = result['documents'][0]['address']
-    y, x = float(match_first['y']),float(match_first['x'])
+    # searching = '종로구 계동길 37'
+    # url = 'https://dapi.kakao.com/v2/local/search/address.json?query='+searching
+    # headers = {"Authorization": "KakaoAK 2b6d2255a3c62ca88e47dc43bac4ee37"}
+    # result = json.loads(str(requests.get(url,headers=headers).text))
+    # match_first = result['documents'][0]['address']
+    # y, x = float(match_first['y']),float(match_first['x'])
 
-    return render(request, 'detail/detail.html', {'boards':boards ,'images' : images, 'y':y, 'x':x})
+    return render(request, 'detail/detail.html')
+
+    # return render(request, 'detail/detail.html', {'boards':boards ,'images' : images, 'y':y, 'x':x})
+
+
+
+def detail(request):
+    # img_crawl()
+    # review_crawl()
+    return redirect('./detail')
+
 
 # 이미지 크롤링
 def img_crawl():
     img = Img.objects.all()
     img.delete()
-    url = 'https://www.tripadvisor.co.kr'
-    urlplus = '/Attraction_Review-g297885-d1776326-Reviews-Udo-Jeju_Jeju_Island.html'   
+    link = Search.objects.get(title = '우도') # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
     page = 1
     option = Options()
     option.add_argument('no-sandbox')
@@ -46,7 +51,7 @@ def img_crawl():
     option.add_experimental_option("excludeSwitches", ["enable-logging"])
     browser = webdriver.Chrome('./chromedriver', options=option) # Mac
     # browser = webdriver.Chrome('./chromedriver', options=option) # Window
-    browser.get(url+urlplus)
+    browser.get(link.url)
 
     while page < 7:
         try:
