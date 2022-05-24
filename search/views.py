@@ -129,7 +129,7 @@ def key_word(request):
 
 
     # review count
-    review_raw = driver.find_elements_by_class_name("rating-review-count")
+    review_raw = driver.find_elements_by_css_selector(".rating-review-count > div > a")
     review_list=[]
     
     for review in review_raw:
@@ -138,8 +138,8 @@ def key_word(request):
             review_count = (review.text)
             review_list.append(review_count)
 
-
-
+            
+        
     # DB에 추가 
     
     time.sleep(1)

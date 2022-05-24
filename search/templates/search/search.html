@@ -159,22 +159,28 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                {% if image1 == None %}
+                                {% if image.0 == None %}
                                 <img src=  "/static/assets/img/service/services1.jpg" style="width: 380px;height: 220px;">
                                 {% else %}
-                                <img src=  "{{image1}}" style="width: 380px;height: 220px;">
+                                <img src=  "{{image.0}}" style="width: 380px;height: 220px;">
                                 {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
                                     <span><i class="fas fa-star"></i><span>
-                                        {% if rating.0 == None %}별{% endif %}{{rating.0}}점 / {%  if review.0 == None %}리뷰{% endif %}{{review.0}}</span> </span>
-                                    <!-- <h3><a href="/detail/list/{{title.0}}/">{{title.0}}</a></h3> -->
+                                        {% if not rating.0 %}별점{% endif %}{{rating.0}}점 / {% if review.0 == None %}리뷰{% endif %}{{review.0}}</span> </span>
+                                    <!-- <h3><a href="/detail/list/{{title1}}/">{{title1}}</a></h3> -->
                                     <h3><a href="/detail/list/?title={{title.0}}">{% if title.0 == None %}여행지{% endif %}{{title.0}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.0 == None %}주소{% endif %}{{address.0}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>
+                                            {% if address.0 == None %}
+                                            주소
+                                            {% else %}
+                                            {{ address.0 }}
+                                            {% endif %}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -185,20 +191,26 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                {% if image2 == None %}
+                                {% if image.1 == None %}
                                 <img src=  "/static/assets/img/service/services2.jpg" style="width: 380px;height: 220px;">
                                 {% else %}
-                                <img src=  "{{image2}}" style="width: 380px;height: 220px;">
+                                <img src=  "{{image.1}}" style="width: 380px;height: 220px;">
                                 {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>{% if rating.1 == None %}별{% endif %}{{rating.1}}점 / {% if review.1 == None %}리뷰{% endif %}{{review.1}}</span> </span>
+                                    <span><i class="fas fa-star"></i><span>{% if rating.1 == None %}별점{% endif %}{{rating.1}}점 / {% if review.1 == None %}리뷰{% endif %}{{review.1}}</span> </span>
                                     <h3><a href="/detail/list/?title={{title.1}}">{% if title.1 == None %}여행지{% endif %}{{title.1}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.1 == None %}주소{% endif %}{{address.1}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>
+                                            {% if address.1 == None %}
+                                            주소
+                                            {% else %}
+                                            {{ address.1 }}
+                                            {% endif %}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -209,20 +221,26 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                {% if image3 == None %}
+                                {% if image.2 == None %}
                                 <img src=  "/static/assets/img/service/services3.jpg" style="width: 380px;height: 220px;">
                                 {% else %}
-                                <img src=  "{{image3}}" style="width: 380px;height: 220px;">
+                                <img src=  "{{image.2}}" style="width: 380px;height: 220px;">
                                 {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>{% if rating.2 == None %}별{% endif %}{{rating.2}}점 / {% if review.2 == None %}리뷰{% endif %}{{review.2}}</span> </span>
+                                    <span><i class="fas fa-star"></i><span>{% if rating.2 == None %}별점{% endif %}{{rating.2}}점 / {% if review.2 == None %}리뷰{% endif %}{{review.2}}</span> </span>
                                     <h3><a href="/detail/list/?title={{title.2}}">{% if title.2 == None %}여행지{% endif %}{{title.2}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.1 == None %}주소{% endif %}{{address.2}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>
+                                            {% if address.2 == None %}
+                                            주소
+                                            {% else %}
+                                            {{ address.2 }}
+                                            {% endif %}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -233,20 +251,26 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                {% if image4 == None %}
+                                {% if image.3 == None %}
                                 <img src=  "/static/assets/img/service/services4.jpg" style="width: 380px;height: 220px;">
                                 {% else %}
-                                <img src=  "{{image4}}" style="width: 380px;height: 220px;">
+                                <img src=  "{{image.3}}" style="width: 380px;height: 220px;">
                                 {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>{% if rating.3 == None %}별{% endif %}{{rating.3}}점 / {% if review.3 == None %}리뷰{% endif %}{{review.3}}</span> </span>
+                                    <span><i class="fas fa-star"></i><span>{% if rating.3 == None %}별점{% endif %}{{rating.3}}점 / {% if review.3 == None %}리뷰{% endif %}{{review.3}}</span> </span>
                                     <h3><a href="/detail/list/?title={{title.3}}">{% if title.3 == None %}여행지{% endif %}{{title.3}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.3 == None %}주소{% endif %}{{address.3}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>
+                                            {% if address.3 == None %}
+                                            주소
+                                            {% else %}
+                                            {{ address.3 }}
+                                            {% endif %}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -257,20 +281,26 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                {% if image5 == None %}
+                                {% if image.4 == None %}
                                 <img src=  "/static/assets/img/service/services5.jpg" style="width: 380px;height: 220px;">
                                 {% else %}
-                                <img src=  "{{image5}}" style="width: 380px;height: 220px;">
+                                <img src=  "{{image.4}}" style="width: 380px;height: 220px;">
                                 {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>{% if rating.4 == None %}별{% endif %}{{rating.4}}점 / {% if review.4 == None %}리뷰{% endif %}{{review.4}}</span> </span>
+                                    <span><i class="fas fa-star"></i><span>{% if rating.4 == None %}별점{% endif %}{{rating.4}}점 / {% if review.4 == None %}리뷰{% endif %}{{review.4}}</span> </span>
                                     <h3><a href="/detail/list/?title={{title.4}}">{% if title.4 == None %}여행지{% endif %}{{title.4}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.4 == None %}주소{% endif %}{{address.4}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>
+                                            {% if address.4 == None %}
+                                            주소
+                                            {% else %}
+                                            {{ address.4 }}
+                                            {% endif %}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -281,20 +311,26 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                {% if image6 == None %}
+                                {% if image.5 == None %}
                                 <img src=  "/static/assets/img/service/services6.jpg" style="width: 380px;height: 220px;">
                                 {% else %}
-                                <img src=  "{{image6}}" style="width: 380px;height: 220px;">
+                                <img src=  "{{image.5}}" style="width: 380px;height: 220px;">
                                 {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>{% if rating.5 == None %}별{% endif %}{{rating.5}}점 / {% if review.5 == None %}주소{% endif %}{{review.5}}</span> </span>
+                                    <span><i class="fas fa-star"></i><span>{% if rating.5 == None %}별점{% endif %}{{rating.5}}점 / {% if review.5 == None %}주소{% endif %}{{review.5}}</span> </span>
                                     <h3><a href="/detail/list/?title={{title.5}}">{% if title.5 == None %}여행지{% endif %}{{title.5}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.5 == None %}주소{% endif %}{{address.5}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>
+                                            {% if address.5 == None %}
+                                            주소
+                                            {% else %}
+                                            {{ address.5 }}
+                                            {% endif %}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
