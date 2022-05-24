@@ -1,36 +1,35 @@
 # 기본 설정 
 # import selenium
-from tkinter import BROWSE
-import urllib.request
+
 import time
+# from jmespath import search
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-import requests
-from bs4 import BeautifulSoup as bs
 from django.shortcuts import render
-from django.db import models
 from .models import Search
 
 # webdriver 옵션 
-options = webdriver.ChromeOptions()
-options.add_experimental_option("excludeSwitches", ["enable-logging"])
-options.add_argument("headless")
-driver = webdriver.Chrome(options=options)
-
-
+# webdriver 옵션 
+options = Options() 
+options.add_experimental_option("excludeSwitches", ["enable-logging"]) 
+options.add_argument("headless") 
+driver = webdriver.Chrome('./chromedriver.exe', options=options) # Window 
+# driver = webdriver.Chrome('./chromedriver', options=options) # Mac
 
 def home(request):
-    return render(request, 'search/home.html')
+    search = ''
+    if request.method == 'GET':
+        search = request.GET.get('query')
+
+    return render(request, 'search/home.html', {'search':search})
 
 def key_word(request):
     Search.objects.all().delete()
     if request.method =='GET':
         question = request.GET.get('q')
         op = request.GET.get('select')
-    #else:
-    #    question = "실패"
-    
+  
     #검색 시작점, url 이동
     url_path = "https://www.tripadvisor.co.kr/Attractions"
     driver.get(url_path) # url로 이동
@@ -39,12 +38,14 @@ def key_word(request):
     search_box = driver.find_element_by_name("q")
     search_box.send_keys(question) # ()안의 값을 현재 커서가 위치한 곳에 넣음 
     search_box.send_keys(Keys.RETURN)  #Enter키를 누르게 함 
-    driver.maximize_window() # 화면 최대화
+    
     time.sleep(1)
 
 
     # 카테고리 검색
-    if op == "호텔":
+    if op == "전체":
+        driver.find_element_by_xpath('//*[@id="search-filters"]/ul/li[4]/a').click()
+    elif op == "호텔":
         driver.find_element_by_xpath('//*[@id="search-filters"]/ul/li[2]/a').click()
     elif op == "음식점":
         driver.find_element_by_xpath('//*[@id="search-filters"]/ul/li[3]/a').click()
@@ -55,10 +56,27 @@ def key_word(request):
     # 활성화된 url을 search_url로 지정 
     present_url = driver.current_url
     driver.get(present_url)
-    time.sleep(5)
+    
+    time.sleep(3)
 
 
+    # title, url 가져오기 
+    data_raw = driver.find_elements_by_class_name("result-title")
+    url_list= []
+    title_list=[]
 
+    for data in data_raw:
+
+        # title
+        title = (data.text)
+
+        # url
+        detail_url = data.get_attribute('onclick')
+        url1 = detail_url.split('/')[1]
+        url2 = url1.split('html')[0]
+        url = "https://www.tripadvisor.co.kr/" + url2 +"html"
+        title_list.append(title)
+        url_list.append(url)
 
     # adddress
     address_raw = driver.find_elements_by_class_name("address-text")
@@ -79,26 +97,6 @@ def key_word(request):
         review_list.append(review_count)
         
 
-    # title, url 가져오기 
-    data_raw = driver.find_elements_by_class_name("result-title")
-    url_list= []
-    title_list=[]
-
-    for data in data_raw:
-
-        # title
-        title = (data.text)
-
-        # url
-        detail_url = data.get_attribute('onclick')
-        url1 = detail_url.split('/')[1]
-        url2 = url1.split('html')[0]
-        url = "https://www.tripadvisor.co.kr/" + url2 +"html"
-        title_list.append(title)
-        url_list.append(url)
-        
-
-
     # image 
 
     image_raw = driver.find_elements_by_css_selector(".aspect.is-shown-at-mobile.is-hidden-tablet > .inner")
@@ -109,6 +107,7 @@ def key_word(request):
         image3 = image2.split('"')[1]
         image4 = image3.split('"')[0]
         image_list.append(image4)
+
 
     # rating
 
@@ -122,6 +121,8 @@ def key_word(request):
 
 
     # DB에 추가 
+    
+    time.sleep(1)
 
     aa = 0
     while aa < 6:
@@ -172,6 +173,7 @@ def key_word(request):
         "rating6" : rating_list[5],
         "review6" : review_list[5],
 
-        "question" : question}
+        "question" : question,
+        "op": op}
         
     return render(request, 'search/search.html', context)
