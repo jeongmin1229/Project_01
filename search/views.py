@@ -1,6 +1,7 @@
 # 기본 설정 
 # import selenium
 
+from re import A
 import time
 # from jmespath import search
 from selenium import webdriver
@@ -39,7 +40,7 @@ def key_word(request):
     search_box.send_keys(question) # ()안의 값을 현재 커서가 위치한 곳에 넣음 
     search_box.send_keys(Keys.RETURN)  #Enter키를 누르게 함 
     
-    time.sleep(1)
+    time.sleep(2)
 
 
     # 카테고리 검색
@@ -66,36 +67,33 @@ def key_word(request):
     title_list=[]
 
     for data in data_raw:
+       
+        if len(title_list)<6:
+           
+            # title
+            title = (data.text)
 
-        # title
-        title = (data.text)
-
-        # url
-        detail_url = data.get_attribute('onclick')
-        url1 = detail_url.split('/')[1]
-        url2 = url1.split('html')[0]
-        url = "https://www.tripadvisor.co.kr/" + url2 +"html"
-        title_list.append(title)
-        url_list.append(url)
+            # url
+            detail_url = data.get_attribute('onclick')
+            url1 = detail_url.split('/')[1]
+            url2 = url1.split('html')[0]
+            url = "https://www.tripadvisor.co.kr/" + url2 +"html"
+            title_list.append(title)
+            url_list.append(url)
+        
 
     # adddress
+
     address_raw = driver.find_elements_by_class_name("address-text")
     address_list=[]
 
     for address1 in address_raw:
-        address2 = (address1.text)
-        address3 = address2.split(',')[0]
-        address_list.append(address3)
 
-
-    # review count 
-    review_raw = driver.find_elements_by_class_name("review_count")
-    review_list=[]
-    
-    for review in review_raw:
-        review_count = (review.text)
-        review_list.append(review_count)
-        
+        if len(address_list)<6:
+            
+            address2 = (address1.text)
+            address3 = address2.split(',')[0]
+            address_list.append(address3)
 
     # image 
 
@@ -103,11 +101,13 @@ def key_word(request):
     image_list=[]
 
     for image1 in image_raw:
-        image2 = image1.get_attribute('style')
-        image3 = image2.split('"')[1]
-        image4 = image3.split('"')[0]
-        image_list.append(image4)
+        
+        if len(image_list)<6:
 
+            image2 = image1.get_attribute('style')
+            image3 = image2.split('"')[1]
+            image4 = image3.split('"')[0]
+            image_list.append(image4)
 
     # rating
 
@@ -115,9 +115,29 @@ def key_word(request):
     rating_list=[]
 
     for rating in rating_raw:
-        rating1 = rating.get_attribute('alt')
-        rating2 = rating1.split('중')[1]
-        rating_list.append(rating2)
+
+        if len(rating_list)<6:
+
+            rating1 = rating.get_attribute('alt')
+            rating2 = rating1.split('중')[1]
+
+            if len(rating2) < 4:
+                rating3 = rating2.split('점')[0] + ".0"
+                rating_list.append(rating3)
+            else:
+                rating_list.append(rating2)
+
+
+    # review count
+    review_raw = driver.find_elements_by_class_name("rating-review-count")
+    review_list=[]
+    
+    for review in review_raw:
+        
+        if len(review_list)<6:
+            review_count = (review.text)
+            review_list.append(review_count)
+
 
 
     # DB에 추가 
@@ -125,53 +145,24 @@ def key_word(request):
     time.sleep(1)
 
     aa = 0
-    while aa < 6:
-        u = Search(address = address_list[aa], title = title_list[aa], url = url_list[aa], image = image_list[aa], review_count=review_list[aa], rating=rating_list[aa])
-        u.save()
-        aa += 1
+    num = len(title_list)
+
+    if num != len(review_list):
+        pass
+
+    else:
+        while aa < 6:
+            u = Search(address = address_list[aa], title = title_list[aa], url = url_list[aa], image = image_list[aa], review_count=review_list[aa], rating=rating_list[aa])
+            aa += 1
+            u.save()
 
     context = {
-        "address1" : address_list[0],
-        "title1" : title_list[0], 
-        "url1" : url_list[0], 
-        "image1" : image_list[0],
-        "rating1" : rating_list[0],
-        "review1" : review_list[0],
-
-        "address2" : address_list[1],
-        "title2" : title_list[1], 
-        "url2" : url_list[1], 
-        "image2" : image_list[1],
-        "rating2" : rating_list[1],
-        "review2" : review_list[1],
-
-        "address3" : address_list[2],
-        "title3" : title_list[2], 
-        "url3" : url_list[2], 
-        "image3" : image_list[2],
-        "rating3" : rating_list[2],
-        "review3" : review_list[2],
-
-        "address4" : address_list[3],
-        "title4" : title_list[3], 
-        "url4" : url_list[3], 
-        "image4" : image_list[3],
-        "rating4" : rating_list[3],
-        "review4" : review_list[3],
-
-        "address5" : address_list[4],
-        "title5" : title_list[4], 
-        "url5" : url_list[4], 
-        "image5" : image_list[4],
-        "rating5" : rating_list[4],
-        "review5" : review_list[4],
-
-        "address6" : address_list[5],
-        "title6" : title_list[5], 
-        "url6" : url_list[5], 
-        "image6" : image_list[5],
-        "rating6" : rating_list[5],
-        "review6" : review_list[5],
+        "address" : address_list,
+        "title" : title_list, 
+        "url" : url_list, 
+        "image" : image_list,
+        "rating" : rating_list,
+        "review" : review_list,
 
         "question" : question,
         "op": op}

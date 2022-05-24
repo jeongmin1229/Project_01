@@ -8,7 +8,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="/static/assets/img/favicon.ico">
 
     <!-- CSS here -->
     <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
@@ -22,6 +21,15 @@
     <link rel="stylesheet" href="/static/assets/css/slick.css">
     <link rel="stylesheet" href="/static/assets/css/nice-select.css">
     <link rel="stylesheet" href="/static/assets/css/style.css">
+
+    <style>
+        .place-cap-top{
+            white-space: nowrap;
+            overflow:hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -90,7 +98,7 @@
             <!-- Mobile Menu -->
             <div class="slider-active">
                 <div class="single-slider hero-overly  slider-height d-flex align-items-center"
-                    data-background="/static/assets/img/hero/h1_hero.jpg">
+                    data-background="/static/assets/img/hero/video-bg.jpg">
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-9 col-lg-9 col-md-9">
@@ -104,24 +112,28 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <!-- form -->
-                                <form action="/search/" class="search-box" method="get">
+                                <form action="/search/" class="search-box" method="GET">
                                     <div class="input-form mb-30">
-                                        <input name="q" type="text" value={{question}}>
+                                        {% if search == None %}
+                                        <input type="text" name="q" placeholder="" value="{{question}}">
+                                        {% else %}
+                                        <input type="text" name="q" placeholder="{{search}}">
+                                        {% endif %}
                                     </div>
                                     <div class="select-form mb-30">
                                         <div class="select-itms">
                                             <select name="select" id="select1">
-                                                <option value="즐길거리">전체</option>
-                                                <option value="호텔">호텔</option>
-                                                <option value="음식점">음식점</option>
-                                                <option value="즐길거리">즐길거리</option>                   
+                                                <option value="전체" {% if op == '전체' %} selected {% endif %}>전체</option>
+                                                <option value="호텔"  {% if op == '호텔' %} selected {% endif %}>호텔</option>
+                                                <option value="음식점" {% if op == '음식점' %} selected {% endif %}>음식점</option>
+                                                <option value="즐길거리" {% if op == '즐길거리' %} selected {% endif %}>즐길거리</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="search-form mb-30">
-                                        <button type = "submit"><a></a></button> 
-                                        <a href="#">Search</a>
-                                    </div>   
+                                        <button type="submit" href='/search/key_word/'
+                                            style='cursor:pointer; width:100%;height:55px;background:#fde02f;font-size:20px;line-height:1;text-align:center;color:#000;display:block;padding:15px;border-radius:5px;text-transform:uppercase;font-family:"Barlow Condensed";letter-spacing:0.1em;line-height:1.2;line-height:24px;font-size:14px'>Search</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -129,6 +141,8 @@
                 </div>
             </div>
         </div>
+ㄴ
+
 
         <div class="favourite-place">
             <div class="container">
@@ -139,121 +153,168 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div class="row">
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src={{image1}} style="width: 290px;height: 220px;">
+                                {% if image1 == None %}
+                                <img src=  "/static/assets/img/service/services1.jpg" style="width: 380px;height: 220px;">
+                                {% else %}
+                                <img src=  "{{image1}}" style="width: 380px;height: 220px;">
+                                {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>{{rating1}}점 / {{review1}}</span> </span>
-                                    <h3><a href="#">{{title1}}</a></h3>
+                                    <span><i class="fas fa-star"></i><span>
+                                        {% if rating.0 == None %}별{% endif %}{{rating.0}}점 / {%  if review.0 == None %}리뷰{% endif %}{{review.0}}</span> </span>
+                                    <!-- <h3><a href="/detail/list/{{title.0}}/">{{title.0}}</a></h3> -->
+                                    <h3><a href="/detail/list/?title={{title.0}}">{% if title.0 == None %}여행지{% endif %}{{title.0}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{{address1}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.0 == None %}주소{% endif %}{{address.0}}</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src={{image2}} style="width: 290px;height: 220px;">
+                                {% if image2 == None %}
+                                <img src=  "/static/assets/img/service/services2.jpg" style="width: 380px;height: 220px;">
+                                {% else %}
+                                <img src=  "{{image2}}" style="width: 380px;height: 220px;">
+                                {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>{{rating2}}점 / {{review2}}</span> </span>
-                                    <h3><a href="#">{{title2}}</a></h3>
+                                    <span><i class="fas fa-star"></i><span>{% if rating.1 == None %}별{% endif %}{{rating.1}}점 / {% if review.1 == None %}리뷰{% endif %}{{review.1}}</span> </span>
+                                    <h3><a href="/detail/list/?title={{title.1}}">{% if title.1 == None %}여행지{% endif %}{{title.1}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{{address2}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.1 == None %}주소{% endif %}{{address.1}}</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src={{image3}} style="width: 290px;height: 220px;">
+                                {% if image3 == None %}
+                                <img src=  "/static/assets/img/service/services3.jpg" style="width: 380px;height: 220px;">
+                                {% else %}
+                                <img src=  "{{image3}}" style="width: 380px;height: 220px;">
+                                {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>{{rating3}}점 / {{review3}}</span> </span>
-                                    <h3><a href="#">{{title3}}</a></h3>
+                                    <span><i class="fas fa-star"></i><span>{% if rating.2 == None %}별{% endif %}{{rating.2}}점 / {% if review.2 == None %}리뷰{% endif %}{{review.2}}</span> </span>
+                                    <h3><a href="/detail/list/?title={{title.2}}">{% if title.2 == None %}여행지{% endif %}{{title.2}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{{address3}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.1 == None %}주소{% endif %}{{address.2}}</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src={{image4}} style="width: 290px;height: 220px;">
+                                {% if image4 == None %}
+                                <img src=  "/static/assets/img/service/services4.jpg" style="width: 380px;height: 220px;">
+                                {% else %}
+                                <img src=  "{{image4}}" style="width: 380px;height: 220px;">
+                                {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>{{rating4}}점 / {{review4}}</span> </span>
-                                    <h3><a href="#">{{title4}}</a></h3>
+                                    <span><i class="fas fa-star"></i><span>{% if rating.3 == None %}별{% endif %}{{rating.3}}점 / {% if review.3 == None %}리뷰{% endif %}{{review.3}}</span> </span>
+                                    <h3><a href="/detail/list/?title={{title.3}}">{% if title.3 == None %}여행지{% endif %}{{title.3}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{{address4}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.3 == None %}주소{% endif %}{{address.3}}</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src={{image5}} style="width: 290px;height: 220px;">
+                                {% if image5 == None %}
+                                <img src=  "/static/assets/img/service/services5.jpg" style="width: 380px;height: 220px;">
+                                {% else %}
+                                <img src=  "{{image5}}" style="width: 380px;height: 220px;">
+                                {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>{{rating5}}점 / {{review5}}</span> </span>
-                                    <h3><a href="#">{{title5}}</a></h3>
+                                    <span><i class="fas fa-star"></i><span>{% if rating.4 == None %}별{% endif %}{{rating.4}}점 / {% if review.4 == None %}리뷰{% endif %}{{review.4}}</span> </span>
+                                    <h3><a href="/detail/list/?title={{title.4}}">{% if title.4 == None %}여행지{% endif %}{{title.4}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{{address5}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.4 == None %}주소{% endif %}{{address.4}}</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-place mb-30">
                             <div class="place-img">
-                                <img src={{image6}} style="width: 290px;height: 220px;">
+                                {% if image6 == None %}
+                                <img src=  "/static/assets/img/service/services6.jpg" style="width: 380px;height: 220px;">
+                                {% else %}
+                                <img src=  "{{image6}}" style="width: 380px;height: 220px;">
+                                {% endif %}
                             </div>
                             <div class="place-cap">
                                 <div class="place-cap-top">
-                                    <span><i class="fas fa-star"></i><span>{{rating6}}점 / {{review6}}</span> </span>
-                                    <h3><a href="#">{{title6}}</a></h3>
+                                    <span><i class="fas fa-star"></i><span>{% if rating.5 == None %}별{% endif %}{{rating.5}}점 / {% if review.5 == None %}주소{% endif %}{{review.5}}</span> </span>
+                                    <h3><a href="/detail/list/?title={{title.5}}">{% if title.5 == None %}여행지{% endif %}{{title.5}}</a></h3>
                                 </div>
                                 <div class="place-cap-bottom">
                                     <ul>
-                                        <li><i class="fas fa-map-marker-alt"></i>{{address6}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{% if address.5 == None %}주소{% endif %}{{address.5}}</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+
+
                 </div>
             </div>
         </div>
 
+
+
+
+
         <!-- Testimonial Start -->
-        <div class="testimonial-area testimonial-padding" data-background="/static/assets/img/testmonial/testimonial_bg.jpg">
+        <div class="testimonial-area testimonial-padding"
+            data-background="/static/assets/img/testmonial/testimonial_bg.jpg">
             <div class="container ">
                 <div class="row d-flex justify-content-center">
                     <div class="col-xl-11 col-lg-11 col-md-9">
